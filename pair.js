@@ -1,173 +1,165 @@
-const { makeid } = require('./gen-id');
 const express = require('express');
-const fs = require('fs');
+const fs = require('fs-extra');
+const { exec } = require("child_process");
 let router = express.Router();
 const pino = require("pino");
-const { default: makeWASocket, useMultiFileAuthState, delay, Browsers, makeCacheableSignalKeyStore, getAggregateVotesInPollMessage, DisconnectReason, WA_DEFAULT_EPHEMERAL, jidNormalizedUser, proto, getDevice, generateWAMessageFromContent, fetchLatestBaileysVersion, makeInMemoryStore, getContentType, generateForwardMessageContent, downloadContentFromMessage, jidDecode } = require('@whiskeysockets/baileys')
+const { Boom } = require("@hapi/boom");
+
+const MESSAGE = process.env.MESSAGE || `
+𝐇𝐢 𝐁𝐄𝐍𝐙-𝐗𝐌𝐃 𝐮𝐬𝐞𝐫 𝐰𝐞'𝐫𝐞 𝐯𝐞𝐫𝐲 𝐭𝐡𝐫𝐢𝐥𝐥𝐞𝐝 𝐭𝐨𝐛𝐡𝐚𝐯𝐞 𝐲𝐨𝐮 𝐡𝐞𝐫𝐞
+
+𝐓𝐡𝐚𝐧𝐤 𝐲𝐨𝐮 𝐟𝐨𝐫 𝐜𝐡𝐨𝐨𝐬𝐧𝐠 𝐨𝐮𝐫 *𝐁𝐎𝐓*
+
+𝐅𝐎𝐋𝐋𝐎𝐖 𝐎𝐔𝐑 𝐖𝐇𝐀𝐓𝐒𝐀𝐏𝐏 𝐂𝐇𝐀𝐍𝐍𝐄𝐋
+
+> 𝐀𝐥𝐩𝐡𝐚𝐊𝐢𝐧𝐠𝐓𝐞𝐜𝐡
+
+https://whatsapp.com/channel/0029VajbiIfAjPXO45zG2i2c
+
+> 𝐍𝐄𝐗𝐎𝐑𝐀 𝐓𝐄𝐂𝐇
+
+https://whatsapp.com/channel/0029Vb6K4nw96H4LOMaOLF22
+
+> 𝐅𝐎𝐑𝐊 𝐀𝐍𝐃 𝐒𝐓𝐀𝐑 𝐓𝐇𝐄 𝐑𝐄𝐏𝐎
+
+https://github.com/ALPHA-KING-TECH/BENZ-XMD-V1
+
+> 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 𝐓𝐡𝐞𝐁𝐞𝐧𝐳𝐓𝐞𝐜𝐡𝐎𝐟𝐟𝐢𝐜𝐢𝐚𝐥🏻
+`;
 
 const { upload } = require('./mega');
-function removeFile(FilePath) {
-    if (!fs.existsSync(FilePath)) return false;
-    fs.rmSync(FilePath, { recursive: true, force: true });
+const {
+    default: makeWASocket,
+    useMultiFileAuthState,
+    delay,
+    makeCacheableSignalKeyStore,
+    Browsers,
+    DisconnectReason
+} = require("@whiskeysockets/baileys");
+
+// Ensure the directory is empty when the app starts
+if (fs.existsSync('./auth_info_baileys')) {
+    fs.emptyDirSync(__dirname + '/auth_info_baileys');
 }
+
 router.get('/', async (req, res) => {
-    const id = makeid();
     let num = req.query.number;
-    async function MALVIN_XD_PAIR_CODE() {
-        const {
-            state,
-            saveCreds
-        } = await useMultiFileAuthState('./temp/' + id);
+
+    async function SUHAIL() {
+        const { state, saveCreds } = await useMultiFileAuthState(`./auth_info_baileys`);
         try {
-var items = ["Safari"];
-function selectRandomItem(array) {
-  var randomIndex = Math.floor(Math.random() * array.length);
-  return array[randomIndex];
-}
-var randomItem = selectRandomItem(items);
-            
-            let sock = makeWASocket({
+            let Smd = makeWASocket({
                 auth: {
                     creds: state.creds,
                     keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" }).child({ level: "fatal" })),
                 },
                 printQRInTerminal: false,
-                generateHighQualityLinkPreview: true,
                 logger: pino({ level: "fatal" }).child({ level: "fatal" }),
-                syncFullHistory: false,
-                browser: Browsers.macOS(randomItem)
+                browser: Browsers.macOS("Safari"),
             });
-            if (!sock.authState.creds.registered) {
+
+            if (!Smd.authState.creds.registered) {
                 await delay(1500);
                 num = num.replace(/[^0-9]/g, '');
-                const code = await sock.requestPairingCode(num);
+                const code = await Smd.requestPairingCode(num);
                 if (!res.headersSent) {
                     await res.send({ code });
                 }
             }
-            sock.ev.on('creds.update', saveCreds);
-            sock.ev.on("connection.update", async (s) => {
 
-    const {
-                    connection,
-                    lastDisconnect
-                } = s;
-                
-                if (connection == "open") {
-                    await delay(5000);
-                    let data = fs.readFileSync(__dirname + `/temp/${id}/creds.json`);
-                    let rf = __dirname + `/temp/${id}/creds.json`;
-                    function generateRandomText() {
-                        const prefix = "3EB";
-                        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-                        let randomText = prefix;
-                        for (let i = prefix.length; i < 22; i++) {
-                            const randomIndex = Math.floor(Math.random() * characters.length);
-                            randomText += characters.charAt(randomIndex);
-                        }
-                        return randomText;
-                    }
-                    const randomText = generateRandomText();
+            Smd.ev.on('creds.update', saveCreds);
+            Smd.ev.on("connection.update", async (s) => {
+                const { connection, lastDisconnect } = s;
+
+                if (connection === "open") {
                     try {
+                        await delay(10000);
+                        if (fs.existsSync('./auth_info_baileys/creds.json'));
 
+                        const auth_path = './auth_info_baileys/';
+                        let user = Smd.user.id;
 
-                        
-                        const { upload } = require('./mega');
-                        const mega_url = await upload(fs.createReadStream(rf), `${sock.user.id}.json`);
-                        const string_session = mega_url.replace('https://mega.nz/file/', '');
-                        let md = "malvin~" + string_session;
-                        let code = await sock.sendMessage(sock.user.id, { text: md });
-                        let desc = `𝐇𝐢 𝐁𝐄𝐍𝐙-𝐗𝐌𝐃 𝐮𝐬𝐞𝐫 𝐰𝐞'𝐫𝐞 𝐯𝐞𝐫𝐲 𝐭𝐡𝐫𝐢𝐥𝐥𝐞𝐝 𝐭𝐨𝐛𝐡𝐚𝐯𝐞 𝐲𝐨𝐮 𝐡𝐞𝐫𝐞
+                        function randomMegaId(length = 6, numberLength = 4) {
+                            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                            let result = '';
+                            for (let i = 0; i < length; i++) {
+                                result += characters.charAt(Math.floor(Math.random() * characters.length));
+                            }
+                            const number = Math.floor(Math.random() * Math.pow(10, numberLength));
+                            return `${result}${number}`;
+                        }
 
-𝐓𝐡𝐚𝐧𝐤 𝐲𝐨𝐮 𝐟𝐨𝐫 𝐜𝐡𝐨𝐨𝐬𝐧𝐠 𝐨𝐮𝐫 *𝐁𝐎𝐓*
+                        const mega_url = await upload(fs.createReadStream(auth_path + 'creds.json'), `${randomMegaId()}.json`);
+                        const Id_session = mega_url.replace('https://mega.nz/file/', '');
+                        const Scan_Id = Id_session;
 
-𝐅𝐎𝐋𝐋𝐎𝐖 𝐎𝐔𝐑 𝐖𝐇𝐀𝐓𝐒𝐀𝐏𝐏 𝐂𝐇𝐀𝐍𝐍𝐄𝐋
+                        // Send session ID
+                        let msgsss = await Smd.sendMessage(user, { text: Scan_Id });
 
-> 𝐀𝐥𝐩𝐡𝐚𝐊𝐢𝐧𝐠𝐓𝐞𝐜𝐡
+                        // Send banner image with caption as a forwarded message from the newsletter channel
+                        await Smd.sendMessage(user, {
+                            image: { url: "https://files.catbox.moe/3l444i.jpg" },
+                            caption: MESSAGE,
+                            contextInfo: {
+                                forwardingScore: 999,
+                                isForwarded: true,
+                                externalAdReply: {
+                                    showAdAttribution: true,
+                                    title: "𝐒𝐞𝐜𝐔𝐧𝐢𝐭𝐃𝐞𝐯𝐬",
+                                    body: "WhatsApp Channel",
+                                    previewType: "PHOTO",
+                                    thumbnailUrl: "https://files.catbox.moe/v8xb9l.jpg",
+                                    mediaType: 1,
+                                    mediaUrl: "https://files.catbox.moe/v8xb9l.jpg",
+                                    sourceUrl: "https://whatsapp.com/channel/0029VajbiIfAjPXO45zG2i2c"
+                                }
+                            }
+                        }, { quoted: msgsss });
 
-https://whatsapp.com/channel/0029VajbiIfAjPXO45zG2i2c
+                        await delay(1000);
+                        try { await fs.emptyDirSync(__dirname + '/auth_info_baileys'); } catch (e) { }
 
-> 𝐍𝐄𝐗𝐎𝐑𝐀 𝐓𝐄𝐂𝐇
-
-https://whatsapp.com/channel/0029Vb6K4nw96H4LOMaOLF22
-
-> 𝐅𝐎𝐑𝐊 𝐀𝐍𝐃 𝐒𝐓𝐀𝐑 𝐓𝐇𝐄 𝐑𝐄𝐏𝐎
-
-https://github.com/ALPHA-KING-TECH/BENZ-XMD-V1
-
-> 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 𝐓𝐡𝐞𝐁𝐞𝐧𝐳𝐓𝐞𝐜𝐡𝐎𝐟𝐟𝐢𝐜𝐢𝐚𝐥🏻`; 
-                        await sock.sendMessage(sock.user.id, {
-text: desc,
-contextInfo: {
-externalAdReply: {
-title: "ALPHA KING TECH",
-thumbnailUrl: "https://files.catbox.moe/v8xb9l.jpg",
-sourceUrl: "https://whatsapp.com/channel/0029VajbiIfAjPXO45zG2i2c",
-mediaType: 1,
-renderLargerThumbnail: true
-}  
-}
-},
-{quoted:code })
                     } catch (e) {
-                            let ddd = sock.sendMessage(sock.user.id, { text: e });
-                            let desc = `𝐇𝐢 𝐁𝐄𝐍𝐙-𝐗𝐌𝐃 𝐮𝐬𝐞𝐫 𝐰𝐞'𝐫𝐞 𝐯𝐞𝐫𝐲 𝐭𝐡𝐫𝐢𝐥𝐥𝐞𝐝 𝐭𝐨𝐛𝐡𝐚𝐯𝐞 𝐲𝐨𝐮 𝐡𝐞𝐫𝐞
-
-𝐓𝐡𝐚𝐧𝐤 𝐲𝐨𝐮 𝐟𝐨𝐫 𝐜𝐡𝐨𝐨𝐬𝐧𝐠 𝐨𝐮𝐫 *𝐁𝐎𝐓*
-
-𝐅𝐎𝐋𝐋𝐎𝐖 𝐎𝐔𝐑 𝐖𝐇𝐀𝐓𝐒𝐀𝐏𝐏 𝐂𝐇𝐀𝐍𝐍𝐄𝐋
-
-> 𝐀𝐥𝐩𝐡𝐚𝐊𝐢𝐧𝐠𝐓𝐞𝐜𝐡
-
-https://whatsapp.com/channel/0029VajbiIfAjPXO45zG2i2c
-
-> 𝐍𝐄𝐗𝐎𝐑𝐀 𝐓𝐄𝐂𝐇
-
-https://whatsapp.com/channel/0029Vb6K4nw96H4LOMaOLF22
-
-> 𝐅𝐎𝐑𝐊 𝐀𝐍𝐃 𝐒𝐓𝐀𝐑 𝐓𝐇𝐄 𝐑𝐄𝐏𝐎
-
-https://github.com/ALPHA-KING-TECH/BENZ-XMD-V1
-
-> 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 𝐓𝐡𝐞𝐁𝐞𝐧𝐳𝐓𝐞𝐜𝐡𝐎𝐟𝐟𝐢𝐜𝐢𝐚𝐥🏻`;
-                            await sock.sendMessage(sock.user.id, {
-text: desc,
-contextInfo: {
-externalAdReply: {
-title: "𝐊𝐈𝐍𝐆 𝐀𝐋𝐏𝐇𝐀 𝐓𝐄𝐂𝐇",
-thumbnailUrl: "https://files.catbox.moe/v8xb9l.jpg",
-sourceUrl: "https://whatsapp.com/channel/0029VajbiIfAjPXO45zG2i2c",
-mediaType: 2,
-renderLargerThumbnail: true,
-showAdAttribution: true
-}  
-}
-},
-{quoted:ddd })
+                        console.log("Error during file upload or message send: ", e);
                     }
-                    await delay(10);
-                    await sock.ws.close();
-                    await removeFile('./temp/' + id);
-                    console.log(`👤 ${sock.user.id} 𝗖𝗼𝗻𝗻𝗲𝗰𝘁𝗲𝗱 ✅ 𝗥𝗲𝘀𝘁𝗮𝗿𝘁𝗶𝗻𝗴 𝗽𝗿𝗼𝗰𝗲𝘀𝘀...`);
-                    await delay(10);
-                    process.exit();
-                } else if (connection === "close" && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
-                    await delay(10);
-                    BENZ_XMD_PAIR_CODE();
+
+                    await delay(100);
+                    await fs.emptyDirSync(__dirname + '/auth_info_baileys');
+                }
+
+                if (connection === "close") {
+                    let reason = new Boom(lastDisconnect?.error)?.output.statusCode;
+                    if (reason === DisconnectReason.connectionClosed) {
+                        console.log("Connection closed!");
+                    } else if (reason === DisconnectReason.connectionLost) {
+                        console.log("Connection Lost from Server!");
+                    } else if (reason === DisconnectReason.restartRequired) {
+                        console.log("Restart Required, Restarting...");
+                        SUHAIL().catch(err => console.log(err));
+                    } else if (reason === DisconnectReason.timedOut) {
+                        console.log("Connection TimedOut!");
+                    } else {
+                        console.log('Connection closed with bot. Please run again.');
+                        console.log(reason);
+                        await delay(5000);
+                        exec('pm2 restart qasim');
+                    }
                 }
             });
+
         } catch (err) {
-            console.log("service restated");
-            await removeFile('./temp/' + id);
+            console.log("Error in SUHAIL function: ", err);
+            exec('pm2 restart qasim');
+            console.log("Service restarted due to error");
+            SUHAIL();
+            await fs.emptyDirSync(__dirname + '/auth_info_baileys');
             if (!res.headersSent) {
-                await res.send({ code: "❗ Service Unavailable" });
+                await res.send({ code: "Try After Few Minutes" });
             }
         }
     }
-   return await BENZ_XD_PAIR_CODE();
-});/*
-setInterval(() => {
-    console.log("☘️ 𝗥𝗲𝘀𝘁𝗮𝗿𝘁𝗶𝗻𝗴 𝗽𝗿𝗼𝗰𝗲𝘀𝘀...");
-    process.exit();
-}, 180000); //30min*/
+
+    await SUHAIL();
+});
+
 module.exports = router;
