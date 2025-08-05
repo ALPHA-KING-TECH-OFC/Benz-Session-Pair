@@ -1,0 +1,23 @@
+{
+  "name": "benz technologies",
+  "description": "session id generator by jaden afrix",
+  "logo": "https://files.catbox.moe/jkf1jd.jpg",
+  "repository": "https://github.com/JadenAfrix1/Benz-Session-Pair.git",
+  "keywords": [
+    "JadenAfrix",
+    "Nexora-Tech"
+  ],
+  "success_url": "/",
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-nodejs#latest"
+    }
+  ],
+  "env": {
+    "PORT": {
+      "description": "Port for web app.4000,5000,3000... any!",
+      "value": "5000",
+      "required": false
+    }
+  }
+}
